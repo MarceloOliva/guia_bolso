@@ -21,8 +21,6 @@ public class Usuario {
     private static final int RAGE_DATA_FINAL = 5;
 
     @Id
-    @SequenceGenerator(name = "SEQ_USUARIO", initialValue = 1000, sequenceName = "SEQ_USUARIO", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_USUARIO")
     private Integer id;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.ALL)
