@@ -23,7 +23,7 @@ class UsuarioControllerTest {
     @Test
     public void deveResgatarOsdadosDeAcordoComOContrato_semErros() throws Exception {
 
-        mvc.perform(get(END_POINT_CARTEIRA.concat("/10/transacoes/2020/5"))
+        mvc.perform(get(END_POINT_CARTEIRA.concat("/10000/transacoes/2020/5"))
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", hasSize(4)));
