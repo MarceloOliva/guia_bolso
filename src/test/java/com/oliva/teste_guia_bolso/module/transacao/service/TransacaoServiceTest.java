@@ -8,6 +8,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 @Transactional
 @SpringBootTest
@@ -28,13 +29,22 @@ class TransacaoServiceTest {
 
     @Test
     public void findByUsuarioMesAno() {
-        var a = service.findByUsuarioMesAno(10, 1, 2020);
-        var b = service.findByUsuarioMesAno(10, 1, 2020);
-        assertThat(a).isEqualTo(b);
+        assertThat(service.findByUsuarioMesAno(10000, 4, 2020))
+            .extracting("descricao", "valor", "usuario.id")
+            .containsExactlyInAnyOrder(
+                tuple("PROSPECT", 50, 10000),
+                tuple("BASE NET", -5012, 10000),
+                tuple("BASE CLARO", 523123, 10000)
+            );
     }
 
     @Test
     public void findTransacao() {
-        assertThat(service.findTransacao(1, 4, 2020)).hasSize(3);
+        assertThat(service.findTransacao(10000, 4, 2020)).hasSize(3);
+    }
+
+    @Test
+    public void findTransacao_() {
+        assertThat(service.findByUsuarioMesAno(10000, 4, 97)).hasSize(4);
     }
 }

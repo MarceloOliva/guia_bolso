@@ -1,5 +1,6 @@
 package com.oliva.teste_guia_bolso.module.transacao.service;
 
+import com.oliva.teste_guia_bolso.module.comum.exception.ValidacaoException;
 import com.oliva.teste_guia_bolso.module.transacao.model.Transacao;
 import com.oliva.teste_guia_bolso.module.transacao.repository.TransacaoRepository;
 import com.oliva.teste_guia_bolso.module.usuario.model.Usuario;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
@@ -22,6 +24,7 @@ public class TransacaoService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Transactional
     public List<Transacao> gerarTransacoes(Integer id, int ano, int mes) {
         var usuario = new Usuario(id);
         var transacoes = IntStream.range(1, 5)
@@ -39,9 +42,37 @@ public class TransacaoService {
     }
 
     public List<Transacao> findByUsuarioMesAno(Integer id, int mes, int ano) {
+        validarRequest(id, mes, ano);
         var transacoes = findTransacao(id, mes, ano);
         return ObjectUtils.isEmpty(transacoes)
             ? gerarTransacoes(id, ano, mes)
             : transacoes;
+    }
+
+    private void validarRequest(Integer id, int mes, int ano) {
+        if (ObjectUtils.isEmpty(id) || ObjectUtils.isEmpty(mes) || ObjectUtils.isEmpty(ano)) {
+            throw new ValidacaoException("Todos campos devem estar populados.");
+        }
+        validarId(id);
+        validarMes(mes);
+        validarAno(ano);
+    }
+
+    private void validarAno(int ano) {
+        if (ano < 0) {
+            throw new ValidacaoException("Ano não pode ser numero negativo ou zero");
+        }
+    }
+
+    private void validarMes(int mes) {
+        if (mes < 0 || mes > 12) {
+            throw new ValidacaoException("Mes do ano esta inválido, favor selecionar de 1 a 12");
+        }
+    }
+
+    private void validarId(Integer id) {
+        if (id < 1000 || id > 100000000) {
+            throw new ValidacaoException("Id do usuario esta invalido, o valor deve estar entre 1.000 a 100.000.000");
+        }
     }
 }
