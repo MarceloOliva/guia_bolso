@@ -41,7 +41,7 @@ public class TransacaoService {
         return repository.findByUsuarioIdAndDataBetween(id, dataInicio, dataFim);
     }
 
-    public List<Transacao> findByUsuarioMesAno(Integer id, int mes, int ano) {
+    public List<Transacao> findByUsuarioMesAno(Integer id, int mes, int ano) throws ValidacaoException {
         validarRequest(id, mes, ano);
         var transacoes = findTransacao(id, mes, ano);
         return ObjectUtils.isEmpty(transacoes)
@@ -49,7 +49,8 @@ public class TransacaoService {
             : transacoes;
     }
 
-    private void validarRequest(Integer id, int mes, int ano) {
+
+    private void validarRequest(Integer id, int mes, int ano) throws ValidacaoException {
         if (ObjectUtils.isEmpty(id) || ObjectUtils.isEmpty(mes) || ObjectUtils.isEmpty(ano)) {
             throw new ValidacaoException("Todos campos devem estar populados.");
         }
@@ -58,19 +59,20 @@ public class TransacaoService {
         validarAno(ano);
     }
 
-    private void validarAno(int ano) {
-        if (ano < 0) {
-            throw new ValidacaoException("Ano não pode ser numero negativo ou zero");
+    private void validarAno(int ano) throws ValidacaoException {
+        if (ano <= 0) {
+            throw new ValidacaoException("Ano não pode ser número negativo ou zero");
         }
     }
 
-    private void validarMes(int mes) {
-        if (mes < 0 || mes > 12) {
-            throw new ValidacaoException("Mes do ano esta inválido, favor selecionar de 1 a 12");
+
+    private void validarMes(int mes) throws ValidacaoException {
+        if (mes <= 0 || mes > 12) {
+            throw new ValidacaoException("Mês do ano está inválido, favor selecionar de 1 a 12");
         }
     }
 
-    private void validarId(Integer id) {
+    private void validarId(Integer id) throws ValidacaoException {
         if (id < 1000 || id > 100000000) {
             throw new ValidacaoException("Id do usuario esta invalido, o valor deve estar entre 1.000 a 100.000.000");
         }

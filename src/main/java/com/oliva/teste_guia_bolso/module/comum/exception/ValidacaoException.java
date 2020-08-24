@@ -1,8 +1,11 @@
 package com.oliva.teste_guia_bolso.module.comum.exception;
 
-public class ValidacaoException extends RuntimeException{
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-    public ValidacaoException(String message){
+@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+public class ValidacaoException extends RuntimeException {
+    public ValidacaoException(String message) {
         super(message);
     }
 }

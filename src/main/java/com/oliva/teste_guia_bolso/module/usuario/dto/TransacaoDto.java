@@ -10,9 +10,7 @@ import org.springframework.beans.BeanUtils;
 import java.time.LocalDateTime;
 
 @Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class TransacaoDto {
     private String descricao;
     private LocalDateTime data;
@@ -24,3 +22,5 @@ public class TransacaoDto {
         return response;
     }
 }
+
+
