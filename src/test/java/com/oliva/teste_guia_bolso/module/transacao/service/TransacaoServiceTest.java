@@ -41,30 +41,38 @@ class TransacaoServiceTest {
     @Test
     public void findByUsuarioMesAno_deveDarErro_seAnoNegativoOuZero() {
         assertThatExceptionOfType(ValidacaoException.class)
-            .isThrownBy(()->service.findByUsuarioMesAno(10000, 4, -2020))
+            .isThrownBy(() -> service.findByUsuarioMesAno(10000, 4, -2020))
             .withMessage("Ano não pode ser número negativo ou zero");
         assertThatExceptionOfType(ValidacaoException.class)
-            .isThrownBy(()->service.findByUsuarioMesAno(10000, 4, 0))
+            .isThrownBy(() -> service.findByUsuarioMesAno(10000, 4, 0))
             .withMessage("Ano não pode ser número negativo ou zero");
     }
-  @Test
+
+    @Test
     public void findByUsuarioMesAno_deveDarErro_seMesNaoForDeUmADoze() {
         assertThatExceptionOfType(ValidacaoException.class)
-            .isThrownBy(()->service.findByUsuarioMesAno(10000, 0, 2020))
+            .isThrownBy(() -> service.findByUsuarioMesAno(10000, 0, 2020))
             .withMessage("Mês do ano está inválido, favor selecionar de 1 a 12");
         assertThatExceptionOfType(ValidacaoException.class)
-            .isThrownBy(()->service.findByUsuarioMesAno(10000, 13, 2200))
+            .isThrownBy(() -> service.findByUsuarioMesAno(10000, 13, 2200))
             .withMessage("Mês do ano está inválido, favor selecionar de 1 a 12");
     }
 
     @Test
     public void findByUsuarioMesAno_deveDarErro_seIdNaoEstiverEntreCertosNumeros() {
         assertThatExceptionOfType(ValidacaoException.class)
-            .isThrownBy(()->service.findByUsuarioMesAno(10, 1, 2020))
+            .isThrownBy(() -> service.findByUsuarioMesAno(10, 1, 2020))
             .withMessage("Id do usuario esta invalido, o valor deve estar entre 1.000 a 100.000.000");
         assertThatExceptionOfType(ValidacaoException.class)
-            .isThrownBy(()->service.findByUsuarioMesAno(1000000000, 12, 2200))
+            .isThrownBy(() -> service.findByUsuarioMesAno(1000000000, 12, 2200))
             .withMessage("Id do usuario esta invalido, o valor deve estar entre 1.000 a 100.000.000");
+    }
+
+    @Test
+    public void findByUsuarioMesAno_deveDarErro_seAlgumCampoNull() {
+        assertThatExceptionOfType(ValidacaoException.class)
+            .isThrownBy(() -> service.findByUsuarioMesAno(null, 1, 2020))
+            .withMessage("Todos campos devem estar populados.");
     }
 
     @Test

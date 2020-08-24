@@ -19,6 +19,11 @@ import java.util.stream.IntStream;
 @Service
 public class TransacaoService {
 
+    private static final int VALOR_INICIAL = 1000;
+    private static final int VALOR_FINAL = 100000000;
+    private static final int MES_DEZEMBRO = 12;
+    private static final int INICIO_MES = 1;
+    private static final int RAGE_DATA_FINAL = 5;
     @Autowired
     private TransacaoRepository repository;
     @Autowired
@@ -27,7 +32,7 @@ public class TransacaoService {
     @Transactional
     public List<Transacao> gerarTransacoes(Integer id, int ano, int mes) {
         var usuario = new Usuario(id);
-        var transacoes = IntStream.range(1, 5)
+        var transacoes = IntStream.range(INICIO_MES, RAGE_DATA_FINAL)
             .mapToObj(i -> Transacao.gerarTransacao(usuario, LocalDate.of(ano, mes, i).atStartOfDay()))
             .collect(Collectors.toList());
         usuario.setTransacoes(transacoes);
@@ -36,7 +41,7 @@ public class TransacaoService {
     }
 
     public List<Transacao> findTransacao(Integer id, int mes, int ano) {
-        var dataInicio = LocalDate.of(ano, mes, 1).atStartOfDay();
+        var dataInicio = LocalDate.of(ano, mes, INICIO_MES).atStartOfDay();
         var dataFim = dataInicio.with(TemporalAdjusters.lastDayOfMonth());
         return repository.findByUsuarioIdAndDataBetween(id, dataInicio, dataFim);
     }
@@ -67,13 +72,13 @@ public class TransacaoService {
 
 
     private void validarMes(int mes) throws ValidacaoException {
-        if (mes <= 0 || mes > 12) {
+        if (mes <= 0 || mes > MES_DEZEMBRO) {
             throw new ValidacaoException("Mês do ano está inválido, favor selecionar de 1 a 12");
         }
     }
 
     private void validarId(Integer id) throws ValidacaoException {
-        if (id < 1000 || id > 100000000) {
+        if (id < VALOR_INICIAL || id > VALOR_FINAL) {
             throw new ValidacaoException("Id do usuario esta invalido, o valor deve estar entre 1.000 a 100.000.000");
         }
     }

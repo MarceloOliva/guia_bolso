@@ -9,10 +9,11 @@ no qual:
  * o mês aceita de um a doze;
  Caso não for enviado nesses parametros será retornado um http Bad request(400) da API;
  ### Tecnologias 
- * Java 11
- * Banco H2
- * Spring Boot
- * Spring Data
+ * Java 11;
+ * Banco H2;
+ * Spring Boot;
+ * Spring Data;
+ 
  ###Padrões de Projeto
  * DTO;
  * Builder;
