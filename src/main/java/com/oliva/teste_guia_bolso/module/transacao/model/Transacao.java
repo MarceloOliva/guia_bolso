@@ -2,7 +2,10 @@ package com.oliva.teste_guia_bolso.module.transacao.model;
 
 import com.oliva.teste_guia_bolso.module.comum.util.NumeroUtil;
 import com.oliva.teste_guia_bolso.module.usuario.model.Usuario;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.persistence.*;

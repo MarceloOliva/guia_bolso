@@ -1,7 +1,6 @@
 package com.oliva.teste_guia_bolso.module.usuario.model;
 
 import com.oliva.teste_guia_bolso.module.transacao.model.Transacao;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
