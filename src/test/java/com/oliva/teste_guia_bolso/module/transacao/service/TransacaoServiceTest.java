@@ -62,10 +62,10 @@ class TransacaoServiceTest {
     public void findByUsuarioMesAno_deveDarErro_seIdNaoEstiverEntreCertosNumeros() {
         assertThatExceptionOfType(ValidacaoException.class)
             .isThrownBy(() -> service.findByUsuarioMesAno(10, 1, 2020))
-            .withMessage("Id do usuario esta invalido, o valor deve estar entre 1.000 a 100.000.000");
+            .withMessage("Id do usuário esta inválido, o valor deve estar entre 1.000 a 100.000.000");
         assertThatExceptionOfType(ValidacaoException.class)
             .isThrownBy(() -> service.findByUsuarioMesAno(1000000000, 12, 2200))
-            .withMessage("Id do usuario esta invalido, o valor deve estar entre 1.000 a 100.000.000");
+            .withMessage("Id do usuário esta inválido, o valor deve estar entre 1.000 a 100.000.000");
     }
 
     @Test
